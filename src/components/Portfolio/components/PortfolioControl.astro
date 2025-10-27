@@ -1,0 +1,21 @@
+---
+interface Props {
+  forInput: string;
+  [key: string]: unknown;
+}
+
+const { forInput, ...rest } = Astro.props;
+---
+
+<style>
+  .portfolioCard {
+    height: 100%;
+    transition: background-color 0.3s linear;
+  }
+
+  a > .portfolioCard:hover {
+    background-color: var(--color-grey-2);
+  }
+</style>
+
+{(<label for={forInput} />)}

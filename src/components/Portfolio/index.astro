@@ -5,11 +5,13 @@ import gameWatchPNGImage from "./assets/gameWatch.png";
 import gameWatchWEBPImage from "./assets/gameWatch.webp";
 import { Code } from "astro:components";
 import PortfolioCard from "./components/PortfolioCard.astro";
+import PortfolioButton from "./components/PortfolioButton.astro";
+import PortfolioControl from "./components/PortfolioControl.astro";
 import List from "../List.astro";
 import Link from "../Link.astro";
 import PrettyParagraph from "../PrettyParagraph.astro";
 import { url } from "../../utils/css";
-
+import CSS from './components/style.module.scss';
 const userverImageURLs = [
   url(userverWEBPImage.src),
   url(userverPNGImage.src),
@@ -21,10 +23,11 @@ const gameWatchImageURLs = [
 ---
 
 <style define:vars={{ userverImageURLs, gameWatchImageURLs }}>
+  
   #portfolio {
-    display: grid;
-    gap: var(--space-12);
-    grid-template-areas:
+    /* display: grid; */
+    /* gap: var(--space-12); */
+    /* grid-template-areas:
       "userver"
       "tests"
       "frontier"
@@ -32,52 +35,97 @@ const gameWatchImageURLs = [
       "bent"
       "courses"
       "landing";
-  }
+  } */
 
   .tile_userver,
   .tile_tests {
     background-size: cover;
     background-repeat: no-repeat;
   }
+ 
+/* Info Box */
+.info {
+    position: absolute;
+    font-style: italic;
+    line-height: 20px;
+    opacity: 0;
+    color: #000;
+    text-align: left;
+    @include transition(all 1000ms ease-out 600ms);
 
-  .rondoCode {
-    display: none;
-  }
-
-  @media (min-width: 432px) {
-    .rondoCode {
-      display: block;
-    }
-  }
-
-  @media (min-width: 1440px) {
-    #portfolio {
-      grid-template-areas:
-        "userver tests tests"
-        "userver frontier frontier"
-        "rondo bent courses"
-        "landing .  .";
-    }
-
-    .tile_tests {
-      min-height: 300px;
-      background-image: var(--gameWatchImageURLs);
+    h3 {
+        color: #fcfff4;
+        margin: 0 0 5px;
+        font-weight: normal;
+        font-size: 1.5em;
+        font-style: normal;
     }
 
-    .tile_userver {
-      min-height: 370px;
-      background-image: var(--userverImageURLs);
+    &.top-left {
+        top: 30px;
+        left: 30px;
     }
-  }
+
+    &.top-right {
+        top: 30px;
+        right: 30px;
+    }
+
+    &.bottom-left {
+        bottom: 30px;
+        left: 30px;
+    }
+
+    &.bottom-right {
+        bottom: 30px;
+        right: 30px;
+    }
+}
+
+
 </style>
 
 <section id="portfolio">
-  {
+  <div class="wrapper">
+      {
+       [
+        {
+          check:true,
+          id: "slide1",
+        },
+        {
+          check:false,
+          id: "slide2",
+        },
+        {
+          check:false,
+          id: "slide3",
+        },
+        {
+          check:false,
+          id: "slide4",
+        },
+        {
+          check:false,
+          id: "slide5",
+        }
+       ].map(({ check, id }) => (
+      <PortfolioButton
+        check={check}
+        id={id}
+      >
+      </PortfolioButton>
+    )) 
+        }
+    <div class="slider-wrapper">
+      <div class="inner">
+     {
     [
       {
         href: "https://userver.tech/",
         title: "Сайт документации userver",
         gridArea: "userver",
+        numberR: "1",
         children: (
           <List>
             <li>- Верстка новой стартовой страницы</li>
@@ -89,11 +137,13 @@ const gameWatchImageURLs = [
         href: "https://github.com/atlz253/Frontend-test-solutions",
         title: "Выполненные тестовые задания по frontend",
         gridArea: "tests",
+        numberR: "2",
       },
       {
         href: "https://github.com/atlz253/frontier",
         title: "Frontier",
         gridArea: "frontier",
+        numberR: "3",
         children: (
           <PrettyParagraph>
             JavaScript библиотека, которая помогает собирать модули системы без
@@ -105,6 +155,7 @@ const gameWatchImageURLs = [
         href: "https://github.com/atlz253/Bent",
         title: "Bent code",
         gridArea: "bent",
+        numberR: "4",
         children: (
           <>
             <PrettyParagraph>
@@ -135,6 +186,7 @@ while(i <= count)
         href: "https://github.com/atlz253/Rondo-neuronet-project",
         title: "Rondo neuronet project",
         gridArea: "rondo",
+        numberR: "5",
         children: (
           <>
             <PrettyParagraph>
@@ -162,6 +214,7 @@ while(i <= count)
       {
         title: "Повышение квалификации",
         gridArea: "courses",
+        numberR: "6",
         children: (
           <List>
             <li>
@@ -182,6 +235,7 @@ while(i <= count)
       {
         title: "Этот сайт :)",
         gridArea: "landing",
+        numberR: "7",
         children: (
           <List>
             <li>
@@ -194,10 +248,11 @@ while(i <= count)
           </List>
         ),
       },
-    ].map(({ href, title, gridArea, children }) => (
+    ].map(({ href, title, gridArea, numberR, children }) => (
       <PortfolioCard
         href={href}
         title={title}
+        numberR={numberR}
         class:list={["tile", "tile_" + gridArea]}
         gridArea={gridArea}
       >
@@ -205,4 +260,59 @@ while(i <= count)
       </PortfolioCard>
     ))
   }
+      </div>
+    </div>
+    <div class="slider-prev-next-control">
+      {
+        [
+          {
+            forInput: "slide1",
+          },
+          {
+            forInput: "slide2",
+          },
+          {
+            forInput: "slide3",
+          },
+          {
+            forInput: "slide4",
+          },
+          {
+            forInput: "slide5",
+          }
+        ].map(({ forInput }) => (
+        <PortfolioControl
+          forInput={forInput}
+        >
+        </PortfolioControl>
+      )) 
+          }
+    </div>
+    <div class="slider-dot-control">
+      {
+        [
+          {
+            forInput: "slide1",
+          },
+          {
+            forInput: "slide2",
+          },
+          {
+            forInput: "slide3",
+          },
+          {
+            forInput: "slide4",
+          },
+          {
+            forInput: "slide5",
+          }
+        ].map(({ forInput }) => (
+        <PortfolioControl
+          forInput={forInput}
+        >
+        </PortfolioControl>
+      )) 
+          }
+    </div>
+  </div>
 </section>

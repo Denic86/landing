@@ -1,14 +1,23 @@
 ---
+import { slide } from "astro:transitions";
 import Card from "../../Card.astro";
 
 interface Props {
   href?: string;
   title: string;
   gridArea: string;
+  numberR: string;
   [key: string]: unknown;
 }
 
-const { href, title, class: className, gridArea, ...rest } = Astro.props;
+const {
+  href,
+  title,
+  class: className,
+  numberR,
+  gridArea,
+  ...rest
+} = Astro.props;
 ---
 
 <style>
@@ -20,24 +29,68 @@ const { href, title, class: className, gridArea, ...rest } = Astro.props;
   a > .portfolioCard:hover {
     background-color: var(--color-grey-2);
   }
+  .slider-prev-next-control {
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    @include transform(translateY(-50%));
+
+    label {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .slider-dot-control {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+  }
+  .slider-dot-control label {
+    cursor: pointer;
+    border-radius: 5px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #bbb;
+    @include transition(all 0.3s);
+  }
+  .slider-dot-control label:hover {
+    background: #ccc;
+    border-color: #777;
+  }
 </style>
 
 {
   href ? (
-    <a style={gridArea ? `grid-area: ${gridArea}` : ""} href={href}>
-      <Card class:list={["portfolioCard", className]} {...rest}>
+    <article>
+      <a style={gridArea ? `grid-area: ${gridArea}` : ""} href={href}>
+        <Card class:list={["portfolioCard", className]} {...rest}>
+          <h2>{title}</h2>
+          <slot />
+        </Card>
+      </a>
+    </article>
+  ) : (
+    <article>
+      <Card
+        class:list={["portfolioCard", className]}
+        style={gridArea ? `grid-area: ${gridArea}` : ""}
+        {...rest}
+      >
         <h2>{title}</h2>
         <slot />
       </Card>
-    </a>
-  ) : (
-    <Card
-      class:list={["portfolioCard", className]}
-      style={gridArea ? `grid-area: ${gridArea}` : ""}
-      {...rest}
-    >
-      <h2>{title}</h2>
-      <slot />
-    </Card>
+    </article>
   )
 }
