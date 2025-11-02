@@ -29,5 +29,3 @@ console.log(slideCount);
     nextButton.addEventListener('click', () => {
         goToSlide(currentIndex + 1);
     });
-
-    // Устанавливаем первый активный слайд при загрузке страницы

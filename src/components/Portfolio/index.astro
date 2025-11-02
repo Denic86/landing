@@ -26,18 +26,7 @@ const gameWatchImageURLs = [
     overflow: hidden;
   }
   .slider-wrapper {
-    /* display: grid;
-    gap: var(--space-12);
-    grid-template-areas:
-      "userver"
-      "tests"
-      "frontier"
-      "rondo"
-      "bent"
-      "courses"
-      "landing"; */
     display: flex;
-    /* width: auto; */
     gap: 10px;
     position: relative;
     transition: all linear 0.3s;
@@ -128,7 +117,6 @@ const gameWatchImageURLs = [
           {
             href: "https://userver.tech/",
             title: "Сайт документации userver",
-            gridArea: "userver",
             children: (
               <List>
                 <li>- Верстка новой стартовой страницы</li>
@@ -139,12 +127,10 @@ const gameWatchImageURLs = [
           {
             href: "https://github.com/atlz253/Frontend-test-solutions",
             title: "Выполненные тестовые задания по frontend",
-            gridArea: "tests",
           },
           {
             href: "https://github.com/atlz253/frontier",
             title: "Frontier",
-            gridArea: "frontier",
             children: (
               <PrettyParagraph>
                 JavaScript библиотека, которая помогает собирать модули системы
@@ -155,7 +141,6 @@ const gameWatchImageURLs = [
           {
             href: "https://github.com/atlz253/Bent",
             title: "Bent code",
-            gridArea: "bent",
             children: (
               <>
                 <PrettyParagraph>
@@ -185,7 +170,6 @@ while(i <= count)
           {
             href: "https://github.com/atlz253/Rondo-neuronet-project",
             title: "Rondo neuronet project",
-            gridArea: "rondo",
             children: (
               <>
                 <PrettyParagraph>
@@ -212,7 +196,6 @@ while(i <= count)
           },
           {
             title: "Повышение квалификации",
-            gridArea: "courses",
             children: (
               <List>
                 <li>
@@ -232,7 +215,6 @@ while(i <= count)
           },
           {
             title: "Этот сайт :)",
-            gridArea: "landing",
             children: (
               <List>
                 <li>
@@ -250,7 +232,6 @@ while(i <= count)
             href={href}
             title={title}
             class:list={["tile", "tile_" + gridArea]}
-            gridArea={gridArea}
           >
             {children}
           </PortfolioCard>
