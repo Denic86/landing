@@ -12,7 +12,7 @@ const { href, title, class: className, gridArea, ...rest } = Astro.props;
 ---
 
 <style>
-  article {
+  .slide {
     flex: 0 0 45%;
   }
   .portfolioCard {
@@ -27,7 +27,7 @@ const { href, title, class: className, gridArea, ...rest } = Astro.props;
 
 {
   href ? (
-    <article>
+    <article class="slide">
       <a style={gridArea ? `grid-area: ${gridArea}` : ""} href={href}>
         <Card class:list={["portfolioCard", className]} {...rest}>
           <h2>{title}</h2>
@@ -36,7 +36,7 @@ const { href, title, class: className, gridArea, ...rest } = Astro.props;
       </a>
     </article>
   ) : (
-    <article>
+    <article class="slide">
       <Card
         class:list={["portfolioCard", className]}
         style={gridArea ? `grid-area: ${gridArea}` : ""}
